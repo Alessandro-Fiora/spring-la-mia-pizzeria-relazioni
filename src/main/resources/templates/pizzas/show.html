@@ -100,10 +100,32 @@
                 </div>
             </div>
 
+
           </th:block>
           <h2 th:unless="${pizza != null}" class="text-center">
             No data found
           </h2>
+        </section>
+
+        <section class="row offers">
+          <div class="col-12">
+            <table th:if="${pizza.offers.size() > 0}" class="table mt-3">
+              <thead>
+                <tr>
+                  <th scope="col">Titolo</th>
+                  <th scope="col">Data di inizio</th>
+                  <th scope="col">Data di fine</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="offer : ${pizza.offers}" th:object="${offer}">
+                  <td th:text="*{titolo}"></td>
+                  <td th:text="*{dataInizio}"></td>
+                  <td th:text="*{dataFine != null ? dataFine : '-'}"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
       </div>
     </main>

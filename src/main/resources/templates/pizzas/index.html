@@ -47,6 +47,11 @@
                       />
                     </td>
                     <td>
+                      <a th:href="@{/pizzas/{id}/offers (id=*{id})}">
+                        <button class="btn btn-primary rounded-3">
+                          Aggiungi offerta
+                        </button>
+                      </a>
                       <a th:href="@{/pizzas/{id}(id=*{id})}">
                         <button class="btn btn-success rounded-3">
                           <i class="fa-solid fa-eye"></i>

@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "offer")
+@Table(name = "offers")
 public class Offer implements Serializable{
     
     @Id
@@ -80,6 +80,6 @@ public class Offer implements Serializable{
 
     @Override
     public String toString(){
-        return String.format("%s, inizia il %s", this.titolo, this.dataInizio.toString());
+        return String.format("offerta %s, sulla pizza %s inizia il %s", this.titolo, this.pizza, this.dataInizio.toString());
     }
 }

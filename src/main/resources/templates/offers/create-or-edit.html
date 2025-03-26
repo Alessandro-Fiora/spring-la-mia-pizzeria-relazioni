@@ -13,28 +13,33 @@
     <main>
       <div class="container">
         <section class="my-5">
-          <h1 class="mb-3">Aggiungi una nuova pizza</h1>
+          <h1 class="mb-3">
+            Offerta [[${offer.titolo}]] per la pizza
+            [[${offer.getPizza().getNome()}]]
+          </h1>
           <form
-            th:action="@{/pizzas/create}"
-            th:object="${pizza}"
+            th:action="@{/offers/create}"
+            th:object="${offer}"
             method="post"
           >
+            <input type="hidden" th:field="*{pizza}" id="input-pizza" />
+
             <div class="mb-3">
-              <label for="nome" class="form-label">Nome:</label>
+              <label for="titolo" class="form-label">Titolo:</label>
               <input
                 type="text"
                 class="form-control"
-                id="nome"
-                th:field="*{nome}"
+                id="titolo"
+                th:field="*{titolo}"
                 th:errorClass="is-invalid"
               />
               <div
                 class="invalid-feedback"
-                th:if="${#fields.hasErrors('nome')}"
+                th:if="${#fields.hasErrors('titolo')}"
               >
                 <ul>
                   <li
-                    th:each="error : ${#fields.errors('nome')}"
+                    th:each="error : ${#fields.errors('titolo')}"
                     th:text="${error}"
                   ></li>
                 </ul>
@@ -42,21 +47,21 @@
             </div>
 
             <div class="mb-3">
-              <label for="descrizione" class="form-label">Descrizione:</label>
-              <textarea
-                type="text"
+              <label for="dataInizio" class="form-label">Data di inizio:</label>
+              <input
+                type="date"
                 class="form-control"
-                id="descrizione"
-                th:field="*{descrizione}"
+                id="dataInizio"
+                th:field="*{dataInizio}"
                 th:errorClass="is-invalid"
               />
               <div
                 class="invalid-feedback"
-                th:if="${#fields.hasErrors('descrizione')}"
+                th:if="${#fields.hasErrors('dataInizio')}"
               >
                 <ul>
                   <li
-                    th:each="error : ${#fields.errors('descrizione')}"
+                    th:each="error : ${#fields.errors('dataInizio')}"
                     th:text="${error}"
                   ></li>
                 </ul>
@@ -64,45 +69,21 @@
             </div>
 
             <div class="mb-3">
-              <label for="prezzo" class="form-label">Prezzo:</label>
+              <label for="dataFine" class="form-label">Data di fine:</label>
               <input
-                type="number"
-                step="0.10"
+                type="date"
                 class="form-control"
-                id="prezzo"
-                th:field="*{prezzo}"
-                th:errorClass="is-invalid"
-                min="0"
-              />
-              <div
-                class="invalid-feedback"
-                th:if="${#fields.hasErrors('prezzo')}"
-              >
-                <ul>
-                  <li
-                    th:each="error : ${#fields.errors('prezzo')}"
-                    th:text="${error}"
-                  ></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="foto" class="form-label">Foto:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="foto"
-                th:field="*{foto}"
+                id="dataFine"
+                th:field="*{dataFine}"
                 th:errorClass="is-invalid"
               />
               <div
                 class="invalid-feedback"
-                th:if="${#fields.hasErrors('nome')}"
+                th:if="${#fields.hasErrors('dataFine')}"
               >
                 <ul>
                   <li
-                    th:each="error : ${#fields.errors('foto')}"
+                    th:each="error : ${#fields.errors('dataFine')}"
                     th:text="${error}"
                   ></li>
                 </ul>
@@ -111,7 +92,7 @@
 
             <div class="div d-flex justify-content-between">
               <button type="submit" class="btn btn-primary">
-                Aggiungi pizza
+                Aggiungi offerta
               </button>
               <button type="reset" class="btn btn-warning">
                 Reset dei campi

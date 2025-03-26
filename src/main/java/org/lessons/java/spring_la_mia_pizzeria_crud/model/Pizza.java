@@ -2,12 +2,14 @@ package org.lessons.java.spring_la_mia_pizzeria_crud.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -35,12 +37,23 @@ public class Pizza implements Serializable {
     @Min(value = 0, message = "prezzo cannot be negative")
     private BigDecimal prezzo;
 
+    @OneToMany(mappedBy = "pizza")
+    private List<Offer> offers;
+
     public Integer getId() {
         return this.id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<Offer> getOffers() {
+        return this.offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
     public String getNome() {

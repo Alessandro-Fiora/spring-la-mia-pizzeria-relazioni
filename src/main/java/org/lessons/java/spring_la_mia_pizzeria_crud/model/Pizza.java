@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +38,7 @@ public class Pizza implements Serializable {
     @Min(value = 0, message = "prezzo cannot be negative")
     private BigDecimal prezzo;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", cascade = (CascadeType.REMOVE))
     private List<Offer> offers;
 
     public Integer getId() {

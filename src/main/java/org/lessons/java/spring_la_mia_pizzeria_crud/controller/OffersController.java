@@ -28,6 +28,15 @@ public class OffersController {
     @Autowired
     private OfferRepository repo;
 
+    @GetMapping("/{id}")
+    public String show(@PathVariable Integer id, Model model) {
+
+        model.addAttribute("offer", repo.findById(id).get());
+
+        return "offers/show";
+    }
+
+
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("offer") Offer formOffer, BindingResult bindingResult, Model model ) {
         
@@ -57,6 +66,16 @@ public class OffersController {
         
         return "redirect:/pizzas/" + formOffer.getPizza().getId();
     }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        int pizzaIdToReturnTo = repo.findById(id).get().getPizza().getId();
+
+        repo.deleteById(id);
+
+        return "redirect:/pizzas/" + pizzaIdToReturnTo;
+    }
+    
     
     
     

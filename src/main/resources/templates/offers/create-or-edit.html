@@ -18,7 +18,7 @@
             [[${offer.getPizza().getNome()}]]
           </h1>
           <form
-            th:action="@{/offers/create}"
+            th:action="${edit} ? @{/offers/edit/{id} (id=*{id})} : @{/offers/create}"
             th:object="${offer}"
             method="post"
           >
@@ -92,7 +92,7 @@
 
             <div class="div d-flex justify-content-between">
               <button type="submit" class="btn btn-primary">
-                Aggiungi offerta
+                Salva offerta
               </button>
               <button type="reset" class="btn btn-warning">
                 Reset dei campi

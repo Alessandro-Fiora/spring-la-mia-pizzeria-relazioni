@@ -115,6 +115,7 @@
                   <th scope="col">Titolo</th>
                   <th scope="col">Data di inizio</th>
                   <th scope="col">Data di fine</th>
+                  <th scope="col">Azioni</th>
                 </tr>
               </thead>
               <tbody>
@@ -122,6 +123,16 @@
                   <td th:text="*{titolo}"></td>
                   <td th:text="*{dataInizio}"></td>
                   <td th:text="*{dataFine != null ? dataFine : '-'}"></td>
+                  <td>
+
+                    <a
+                    th:href="@{/offers/edit/{id} (id=*{id})}"
+                    >
+                    <button class="btn btn-warning rounded-3">
+                      <i class="fa-solid fa-pencil"></i>
+                    </button>
+                  </a>
+                </td>
                 </tr>
               </tbody>
             </table>

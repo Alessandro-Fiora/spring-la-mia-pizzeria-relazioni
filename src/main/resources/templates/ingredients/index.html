@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <th:block th:replace="~{fragments/resources :: styling}" />
+    <title>Lista ingredienti</title>
+  </head>
+  <body>
+    <header>
+      <th:block th:replace="~{fragments/navbar}" />
+    </header>
+    <main>
+      <div class="container">
+        <section class="my-5">
+          <div class="d-flex justify-content-between">
+            <h1 class="mb-3">Lista Ingredienti</h1>
+            <div>
+              <a class="btn btn-primary" th:href="@{/ingredients/create}">
+                Aggiungi un nuovo ingrediente
+              </a>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-12">
+              <table th:if="${ingredients.size() > 0}" class="table mt-3">
+                <thead>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Azioni</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    th:each="ingredient : ${ingredients}"
+                    th:object="${ingredient}"
+                  >
+                    <td th:text="*{nome}"></td>
+                    <td>
+                      <a th:href="@{/ingredients/{id}(id=*{id})}">
+                        <button class="btn btn-success rounded-3">
+                          <i class="fa-solid fa-eye"></i>
+                        </button>
+                      </a>
+                      <a th:href="@{/ingredients/edit/{id}(id=*{id})}">
+                        <button class="btn btn-warning rounded-3">
+                          <i class="fa-solid fa-pencil"></i>
+                        </button>
+                      </a>
+                      <form
+                        class="d-inline"
+                        th:action="@{/ingredients/delete/{id}(id=*{id})}"
+                        method="post"
+                      >
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          data-bs-toggle="modal"
+                          th:data-bs-target="'#modal-' + ${ingredient.id}"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                        <div
+                          class="modal fade"
+                          th:id="'modal-' + ${ingredient.id}"
+                          data-bs-backdrop="static"
+                          data-bs-keyboard="false"
+                          tabindex="-1"
+                          aria-labelledby="staticBackdropLabel"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1
+                                  class="modal-title fs-5"
+                                  id="staticBackdropLabel"
+                                >
+                                  Elimina ingrediente [[*{nome}]]
+                                </h1>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <p>Sei sicuro? L'operazione è irreversibile</p>
+                              </div>
+                              <div class="modal-footer">
+                                <button
+                                  type="button"
+                                  class="btn btn-secondary"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Annulla
+                                </button>
+                                <button
+                                  type="submit"
+                                  class="btn btn-danger rounded-3"
+                                >
+                                  Elimina
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h2 th:unless="${ingredients.size() > 0}" class="text-center">
+                No data found
+              </h2>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <th:block th:replace="~{fragments/resources :: bootstrapJs}"></th:block>
+  </body>
+</html>

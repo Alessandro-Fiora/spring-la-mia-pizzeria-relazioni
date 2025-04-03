@@ -101,6 +101,16 @@
                         <div class="col-6">
                             <h5 class="" th:text="'€ ' + *{prezzo}" />
                         </div>
+
+                        <div class="row mt-4" th:if="${pizza.ingredients.size() > 0}">
+                          <div class="col-12">
+                          <h4>Ingredienti</h4>
+                          <ul>
+                            <li th:each="ingrediente : ${pizza.ingredients}" th:text="${ingrediente.nome}"></li>
+                          </ul>
+                          </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

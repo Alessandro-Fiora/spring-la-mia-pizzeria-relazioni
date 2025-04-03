@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.lessons.java.spring_la_mia_pizzeria_crud.model.Offer;
 import org.lessons.java.spring_la_mia_pizzeria_crud.model.Pizza;
+import org.lessons.java.spring_la_mia_pizzeria_crud.repo.IngredientRepository;
 import org.lessons.java.spring_la_mia_pizzeria_crud.repo.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,9 @@ public class PizzasController {
 
     @Autowired
     private PizzaRepository repo;
+
+    @Autowired
+    private IngredientRepository ingredientRepo;
 
     @GetMapping
     public String index(Model model){
@@ -55,6 +59,7 @@ public class PizzasController {
         Pizza pizza = new Pizza();
         pizza.setFoto("https://fakeimg.pl/600x400/ff6666/ffffff?text=Pizza");
         model.addAttribute("pizza", pizza);
+        model.addAttribute("ingredients", ingredientRepo.findAll());
         return "pizzas/create";
     }
 
@@ -62,6 +67,8 @@ public class PizzasController {
     public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model ){
 
         if(bindingResult.hasErrors()){
+            model.addAttribute("ingredients", ingredientRepo.findAll());
+
             return "pizzas/create";
         }
 
@@ -75,12 +82,15 @@ public class PizzasController {
     public String edit(@PathVariable Integer id, @RequestParam(value = "redirect", required = false) String redirect, Model model){
         model.addAttribute("pizza", repo.findById(id).get());
         model.addAttribute("redirect", redirect);
+        model.addAttribute("ingredients", ingredientRepo.findAll());
         return "pizzas/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, @RequestParam(value = "redirect", required = false) String redirect, Model model ){
         if(bindingResult.hasErrors()){
+            model.addAttribute("ingredients", ingredientRepo.findAll());
+
             return "pizzas/edit";
         }
         repo.save(formPizza);
